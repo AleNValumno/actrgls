@@ -1,0 +1,111 @@
+---
+title: "Untitled"
+author: "Alejandro Nieto"
+date: "2024-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+#1
+Si que podriamos inferir la respuesta a eventos pasados en base de los restos materiales presentes, si vienen acompañado ademas de bases de datos con informacion del pasado para poder contrastarlo y afirmarlo junto con los restos pasados.
+#2
+No, ya que unicamente el analisis de correlacion lineal de Pearson es un indice para medir el grado de relación de dos variables siempre y cuando ambas sean cuantitativas y continuas.
+#3
+La casualidad es una combinacion de circunstancias que no se pueden prever ni evitar. Un ejemplo seria "Iba caminando por el campo y me tropeze, encontrandome casualmente un bloque de jade impoluto"
+#4
+1. La variable dependiente (Y)
+2. Las variables independientes(X)
+3. El coeficinete de regresion(B)
+4. El Intercepto(a)
+5. El parametro Error(e)
+6. El coeficiente de determinacion(R^2)
+7. El parametro de estadísticos de prueba(t,F)
+#5
+No, porque en el plano cortesiano el eje de ordenadas es el eje Y mientras que el eje X es el eje de abscisas.
+#6
+La recta de regresion es una linea recta que se ajusta a un conjunto de datos para mostrar la relacion entre dos variables y se usa en los analisis univariables para predecir la relacion entre 2 variables, normalmente una independiente y otra dependiente.
+El plano de regresión es una extension de la recta de regresión en un espacio tridimensional y se usa en los análisis multivariado cuando se tienen más de dos variables independientes
+#7
+Las hipotesis/supuestos del analisis de regresion lineal son:
+1.La Linealidad, que es la relación entre la variable dependiente y las variables independientes es lineal.
+2.La Independencia de errores, es decir, los errores tienen que ser independientes entre sí.
+3.La Homocedasticidad: La varianza de los errores es constante en todos los niveles de las variables independientes.
+4.La Normalidad de los errores, que es que los errores siguen una distribución normal.
+5. La No multicolinealidad, que significa que las variables independientes no están altamente correlacionadas entre sí
+#8
+
+```{r, echo=TRUE}
+
+cuentas <- c(110,2,6,98,40,94,31,5,8,10)
+distancia <- c( 1.1,100.2,90.3,5.4,57.5,6.6,34.7,65.8,57.9,86.1)
+datos <- data.frame(distancia, cuentas)
+recta <- lm(cuentas ~ distancia, data = datos)
+summary(recta)
+
+```
+Para este ejericio se han usado los comandos principales:
+- El comando KableExtra para diseñar tablas con los datos que se tienen.
+- El comando sumatorio_columnas, para sumar las columnas y obtener la recta de regresesión.
+#9
+
+#10
+Significa que no existe una relacion entre las variables, ya que tanto la variable dependiente como la variable independiente son 0.
+#11
+
+#12
+```{r, echo=TRUE}
+#Se calcula el número de cuentas para este yacimiento 
+distancia_nueva <- 1.1
+prediccion <- predict(recta, newdata = data.frame(distancia = distancia_nueva))
+print(prediccion)
+#Se calcula el error estándar de esta predicción
+prediccion_error <- predict(recta, newdata = data.frame(distancia = distancia_nueva), se.fit = TRUE)$se.fit
+print(prediccion_error)
+```
+
+#13
+```{r, echo=TRUE}
+cu_predic <- c(6, 98, 40, 94, 31, 5, 8, 10)
+pred_cu <- c(-6.682842, 85.520196, 28.938591, 84.216973, 53.69983, 19.924631, 28.504183, -2.121561)
+residuos <- cuentas_prediccion - predicciones_cuentas
+print(residuos)
+```
+
+#14
+
+#15
+```{r, echo=TRUE}
+set.seed(123) 
+ind_entrenamiento <- sample(1:length(cuentas), 0.7 * length(cuentas)) 
+d_entrenamiento <- datos[indices_entrenamiento, ]
+d_prueba <- datos[-indices_entrenamiento, ]
+```
+Se emplean los conjuntos de datos Conjunto de datos de variables independientes y dependientes.
+#16
+```{r, echo=TRUE}
+library(caret)
+con <- trainControl(method = "cv", number = 5)
+mod <- train(cuentas ~ ., data = datos, method = "lm", trControl = control)
+print(modelo_cv)
+```
+
+#17
+
+#18
+Seria indicios de heterocedasticidad, ya que esta es cuando la variabilidad de los errores en un modelo estadistico que no es constante a lo largo de los valores de la variable independiente. No puede ser homocedasticidad, ya que este se refiere cuando la varianza es constante(cuando no deberia) en los difertentes niveles de un factor, es decir, entre diferentes grupos.
+#19
+
+#20
+Que mientras que una observacion atípica se refiere a un valor que difiere significamente del resto de los datos del conjunto de datos, es decir, que afecta a la precisión de los resultados debido a su valor extremos, mientras que la observación que produce el "apalancamiento del modelo" se refiere a la influencia que una observación particular tiene en los coeficientes estimados por un modelo estadístico, es decir, que tiene un impacto importante en la estimacion de los parámetros del modelo y que puede llevar a un sobreajuste.
